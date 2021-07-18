@@ -1,0 +1,15 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "recipe application",
+  "main": "index.html",
+  "scripts": {
+    "start": "parcel index.html",
+    "bulid": "parcel build index.html"
+  },
+  "author": "Wojciech Marciniszyn/ done with course by Jonas Schmedtmann",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.3.1"
+  }
+}
