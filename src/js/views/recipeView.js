@@ -4,6 +4,8 @@ console.log(Fraction);
 class RecipeView {
   #parentElements = document.querySelector('.recipe');
   #data;
+  #errorMessage = 'We couldnt find that recipe. Please try another one!'
+  #message = ''
 
   render(data) {
     this.#data = data;
@@ -23,9 +25,43 @@ class RecipeView {
           <use href="${icons}#icon-loader"></use>
         </svg>
       </div>`;
-    this.#parentElements.innerHTML = '';
+    this.#clear();
     this.#parentElements.insertAdjacentHTML('afterbegin', markup);
   };
+
+  renderError(message = this.#errorMessage){
+    const markup = ` 
+    <div class="error">
+    <div>
+      <svg>
+        <use href="${icons}#icon-alert-triangle"></use>
+      </svg>
+    </div>
+    <p>"${message}"</p>
+  </div>
+    `
+    this.#clear();
+    this.#parentElements.insertAdjacentHTML('afterbegin', markup);
+
+  }
+
+  renderMessage(message = this.#message){
+    const markup = ` 
+
+    <div class="message">
+      <div>
+        <svg>
+          <use href="${icons}#icon-smile"></use>
+        </svg>
+      </div>
+      <p>"${message}"</p>
+    </div>
+
+    `
+    this.#clear();
+    this.#parentElements.insertAdjacentHTML('afterbegin', markup);
+
+  }
 
   addHandlerRender(handler) {
     ['load','hashchange'].forEach(ev => window.addEventListener(ev,handler))
