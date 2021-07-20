@@ -1,6 +1,6 @@
 import icons from 'url:../../img/icons.svg';
-import {Fraction} from 'fractional';
-console.log(Fraction)
+import { Fraction } from 'fractional';
+console.log(Fraction);
 class RecipeView {
   #parentElements = document.querySelector('.recipe');
   #data;
@@ -26,6 +26,11 @@ class RecipeView {
     this.#parentElements.innerHTML = '';
     this.#parentElements.insertAdjacentHTML('afterbegin', markup);
   };
+
+  addHandlerRender(handler) {
+    ['load','hashchange'].forEach(ev => window.addEventListener(ev,handler))
+  }
+
   #generateMarkup() {
     return `<figure class="recipe__fig">
         <img src='${this.#data.image}' alt=${
@@ -84,7 +89,9 @@ class RecipeView {
         <div class="recipe__ingredients">
         <h2 class="heading--2">Recipe ingredients</h2>
         <ul class="recipe__ingredient-list">
-              ${this.#data.ingredients.map(this.#generateMarkupIngredient).join('')}
+              ${this.#data.ingredients
+                .map(this.#generateMarkupIngredient)
+                .join('')}
         
         
           <li class="recipe__ingredient">
@@ -121,15 +128,15 @@ class RecipeView {
         </a>
         </div>`;
   }
-  #generateMarkupIngredient(el){
+  #generateMarkupIngredient(el) {
     return `
   <li class="recipe__ingredient">
   <svg class="recipe__icon">
     <use href="${icons}#icon-check"></use>
   </svg>
-  <div class="recipe__quantity">${el.quantity ? new Fraction(
-    el.quantity
-  ).toString() : ''}</div>
+  <div class="recipe__quantity">${
+    el.quantity ? new Fraction(el.quantity).toString() : ''
+  }</div>
   <div class="recipe__description">
     <span class="recipe__unit">${el.unit}</span>
     ${el.description}
