@@ -18,7 +18,6 @@ const controlRecipes = async function () {
     recipeView.renderSpinner();
 
     await model.loadRecipe(id);
-
     //(2)Rendering recipe
     recipeView.render(model.state.recipe);
   } catch (err) {
@@ -28,33 +27,38 @@ const controlRecipes = async function () {
 
 const controlSearchResults = async function () {
   try {
-    resultsView.renderSpinner()
-    //1. get search query 
-    const query = searchView.getQuery()
-    if(!query) return;
-
+    resultsView.renderSpinner();
+    //1. get search query
+    const query = searchView.getQuery();
+    if (!query) return;
 
     await model.loadSearchResults(query);
 
-    console.log(model.state.search.results)
+    console.log(model.state.search.results);
     //resultsView.render(model.state.search.results)
-    resultsView.render(model.getSearchResultPage(1))
+    resultsView.render(model.getSearchResultPage(1));
 
-    //render pagination button 
-    paginationView.render(model.state.search)
-  } catch (err) {
-
-  }
+    //render pagination button
+    paginationView.render(model.state.search);
+  } catch (err) {}
 };
-const controlPagination = function(goToPage){
-  resultsView.render(model.getSearchResultPage(goToPage))
+const controlPagination = function (goToPage) {
+  resultsView.render(model.getSearchResultPage(goToPage));
 
-  //render pagination button 
-  paginationView.render(model.state.search)
-}
+  //render pagination button
+  paginationView.render(model.state.search);
+};
+
+const controlServings = function (newServings) {
+  // Update the recipe servings (in state)
+  model.updateServings(newServings);
+  // Uptade the recipe view
+  recipeView.render(model.state.recipe);
+};
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
-  searchView.addHandlerSearch(controlSearchResults)
-  paginationView.addHandlerClick(controlPagination)
+  recipeView.addHandlerUpdateServings(controlServings);
+  searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 };
 init();

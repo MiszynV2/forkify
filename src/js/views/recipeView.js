@@ -1,4 +1,4 @@
-import View from './View.js' 
+import View from './View.js';
 import icons from 'url:../../img/icons.svg';
 import { Fraction } from 'fractional';
 
@@ -11,8 +11,15 @@ class RecipeView extends View {
     ['load', 'hashchange'].forEach(ev => window.addEventListener(ev, handler));
   }
 
+  addHandlerUpdateServings(handler) {
+    this._parentElements.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--update-servings');
+      if (!btn) return;
+      const updateTo = +btn.dataset.updateTo;
+      handler(updateTo);
+    });
+  }
   _generateMarkup() {
-    
     return `<figure class="recipe__fig">
         <img src='${this._data.image}' alt=${
       this._data.title
@@ -42,12 +49,16 @@ class RecipeView extends View {
           <span class="recipe__info-text">servings</span>
         
           <div class="recipe__info-buttons">
-            <button class="btn--tiny btn--increase-servings">
+            <button class="btn--tiny btn--update-servings" data-update-to="${
+              this._data.servings - 1
+            }">
               <svg>
                 <use href="${icons}#icon-minus-circle"></use>
               </svg>
             </button>
-            <button class="btn--tiny btn--increase-servings">
+            <button class="btn--tiny btn--update-servings"  data-update-to="${
+              this._data.servings + 1
+            }">
               <svg>
                 <use href="${icons}#icon-plus-circle"></use>
               </svg>
