@@ -15,7 +15,10 @@ class RecipeView extends View {
     this._parentElements.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--update-servings');
       if (!btn) return;
+      ////////WHY THIS ISNT WORKING
+      //const {updateTo} = +btn.dataset;
       const updateTo = +btn.dataset.updateTo;
+      if (updateTo < 1) return;
       handler(updateTo);
     });
   }
@@ -111,7 +114,7 @@ class RecipeView extends View {
           target="_blank"
         >
           <span>Directions</span>
-          <svg class="search__icon">
+          <svg clnpmass="search__icon">
             <use href="${icons}#icon-arrow-right"></use>
           </svg>
         </a>
