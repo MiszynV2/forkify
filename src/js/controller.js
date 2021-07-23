@@ -17,6 +17,7 @@ const controlRecipes = async function () {
     if (!id) {
       return;
     }
+    
 
     recipeView.renderSpinner();
 
@@ -87,6 +88,13 @@ const controlAddRecipe = async function (newRecipe) {
     console.log(model.state.recipe);
     recipeView.render(model.state.recipe);
     addRecipeView.renderMessage();
+
+    //render bookmark viev
+    bookmarksView.render(model.state.bookmarks)
+
+    //change id in the URL;
+
+    window.history.pushState(null,'',`#${model.state.recipe.id}`)
 
     setTimeout(function () {
       addRecipeView.toggleWindow();
