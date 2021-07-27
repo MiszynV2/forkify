@@ -6,6 +6,7 @@ node_modules/
 !.vscode/extensions.json
 *.code-workspace
 .parcel-cache
+.cache
 dist/
 # Local History for Visual Studio Code
 .history/

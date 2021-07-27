@@ -18,7 +18,7 @@ class RecipeView extends View {
       ////////WHY THIS ISNT WORKING
       //const {updateTo} = +btn.dataset;
       const updateTo = +btn.dataset.updateTo;
-      if (updateTo < 1) return;
+      if (updateTo < 1 || updateTo > 25) return;
       handler(updateTo);
     });
   }
@@ -97,16 +97,7 @@ class RecipeView extends View {
                 .join('')}
         
         
-          <li class="recipe__ingredient">
-            <svg class="recipe__icon">
-              <use href="${icons}#icon-check"></use>
-            </svg>
-            <div class="recipe__quantity">0.5</div>
-            <div class="recipe__description">
-              <span class="recipe__unit">cup</span>
-              ricotta cheese
-            </div>
-          </li>
+
         </ul>
         </div>
         

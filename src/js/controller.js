@@ -17,7 +17,6 @@ const controlRecipes = async function () {
     if (!id) {
       return;
     }
-    
 
     recipeView.renderSpinner();
 
@@ -44,7 +43,8 @@ const controlSearchResults = async function () {
     resultsView.renderSpinner();
     //1. get search query
     const query = searchView.getQuery();
-    if (!query) return;
+    console.log(!query)
+    if (query)  resultsView.renderSpinner();
 
     await model.loadSearchResults(query);
 
@@ -55,12 +55,25 @@ const controlSearchResults = async function () {
     paginationView.render(model.state.search);
   } catch (err) {}
 };
+
+const controlFirstSearchResults = async function () {
+  try {
+    resultsView.renderSpinner();
+    //1. get search query
+    window.history.pushState(null, '', '')
+    await model.loadSearchResults();
+
+
+  } catch (err) {}
+};
 const controlPagination = function (goToPage) {
   resultsView.render(model.getSearchResultPage(goToPage));
 
   //render pagination button
   paginationView.render(model.state.search);
 };
+
+
 
 const controlServings = function (newServings) {
   // Update the recipe servings (in state)
@@ -90,11 +103,11 @@ const controlAddRecipe = async function (newRecipe) {
     addRecipeView.renderMessage();
 
     //render bookmark viev
-    bookmarksView.render(model.state.bookmarks)
+    bookmarksView.render(model.state.bookmarks);
 
     //change id in the URL;
 
-    window.history.pushState(null,'',`#${model.state.recipe.id}`)
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
 
     setTimeout(function () {
       addRecipeView.toggleWindow();
