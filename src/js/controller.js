@@ -2,6 +2,7 @@ import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import { TIMEOUT_MILISEC } from './config.js';
+import {FIRST_SEARCH_RECIPE} from './config.js'
 //import View from './View.js'
 import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
@@ -60,9 +61,17 @@ const controlFirstSearchResults = async function () {
   try {
     resultsView.renderSpinner();
     //1. get search query
-    window.history.pushState(null, '', '')
-    await model.loadSearchResults();
+    const firstQuery = FIRST_SEARCH_RECIPE;
+    console.log(!firstQuery)
+    resultsView.renderSpinner();
 
+    await model.loadSearchResults(firstQuery);
+
+    //resultsView.render(model.state.search.results)
+    resultsView.render(model.getSearchResultPage(1));
+
+    //render pagination button
+    paginationView.render(model.state.search);
 
   } catch (err) {}
 };
@@ -119,6 +128,7 @@ const controlAddRecipe = async function (newRecipe) {
 };
 
 const init = function () {
+  controlFirstSearchResults()
   bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);

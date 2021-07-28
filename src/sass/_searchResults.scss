@@ -12,6 +12,8 @@
 .pagination {
   margin-top: auto;
   padding: 0 3.5rem;
+  display: flex;
+  justify-content: space-around;
 
   &::after {
     content: '';
